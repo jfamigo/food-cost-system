@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import insumoRoutes from './routes/insumo.routes';
 import fichaTecnicaRoutes from './routes/fichaTecnica.routes';
@@ -9,6 +10,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors({
+  origin: 'http://localhost:5173',
+}));
 app.use(express.json());
 app.use('/insumos', insumoRoutes);
 app.use('/fichas-tecnicas', fichaTecnicaRoutes);
