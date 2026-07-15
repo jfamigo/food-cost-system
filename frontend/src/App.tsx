@@ -3,9 +3,10 @@ import ListaInsumos from './pages/ListaInsumos';
 import CadastroInsumo from './pages/CadastroInsumo';
 import FichasTecnicas from './pages/FichasTecnicas';
 import Dashboard from './pages/Dashboard';
+import Estoque from './pages/Estoque';
 
 function App() {
-  const [paginaAtual, setPaginaAtual] = useState<'lista' | 'cadastro' | 'fichas' | 'dashboard'>('lista');
+  const [paginaAtual, setPaginaAtual] = useState<'lista' | 'cadastro' | 'fichas' | 'dashboard' | 'estoque'>('lista');
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -34,12 +35,19 @@ function App() {
         >
           Dashboard
         </button>
+        <button
+          onClick={() => setPaginaAtual('estoque')}
+          className={`px-4 py-2 rounded ${paginaAtual === 'estoque' ? 'bg-slate-600' : ''}`}
+        >
+          Estoque
+        </button>    
       </nav>
 
       {paginaAtual === 'lista' && <ListaInsumos />}
       {paginaAtual === 'cadastro' && <CadastroInsumo />}
       {paginaAtual === 'fichas' && <FichasTecnicas />}
       {paginaAtual === 'dashboard' && <Dashboard />}
+      {paginaAtual === 'estoque' && <Estoque />}
     </div>
   );
 }
