@@ -2,9 +2,10 @@ import { useState } from 'react';
 import ListaInsumos from './pages/ListaInsumos';
 import CadastroInsumo from './pages/CadastroInsumo';
 import FichasTecnicas from './pages/FichasTecnicas';
+import Dashboard from './pages/Dashboard';
 
 function App() {
-  const [paginaAtual, setPaginaAtual] = useState<'lista' | 'cadastro' | 'fichas'>('lista');
+  const [paginaAtual, setPaginaAtual] = useState<'lista' | 'cadastro' | 'fichas' | 'dashboard'>('lista');
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -27,11 +28,18 @@ function App() {
         >
           Fichas Técnicas
         </button>
+        <button
+          onClick={() => setPaginaAtual('dashboard')}
+          className={`px-4 py-2 rounded ${paginaAtual === 'dashboard' ? 'bg-slate-600' : ''}`}
+        >
+          Dashboard
+        </button>
       </nav>
 
       {paginaAtual === 'lista' && <ListaInsumos />}
       {paginaAtual === 'cadastro' && <CadastroInsumo />}
       {paginaAtual === 'fichas' && <FichasTecnicas />}
+      {paginaAtual === 'dashboard' && <Dashboard />}
     </div>
   );
 }

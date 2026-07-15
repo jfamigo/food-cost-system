@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import insumoRoutes from './routes/insumo.routes';
 import fichaTecnicaRoutes from './routes/fichaTecnica.routes';
 import receitaInsumoRoutes from './routes/receitaInsumo.routes';
+import movimentacaoEstoqueRoutes from './routes/movimentacaoEstoque.routes';
 
 dotenv.config();
 
@@ -17,7 +18,8 @@ app.use(express.json());
 app.use('/insumos', insumoRoutes);
 app.use('/fichas-tecnicas', fichaTecnicaRoutes);
 app.use('/fichas-tecnicas/:id/insumos', receitaInsumoRoutes);
-
+app.use('/movimentacoes-estoque', movimentacaoEstoqueRoutes);
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });
+
