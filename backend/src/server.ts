@@ -6,7 +6,7 @@ import fichaTecnicaRoutes from './routes/fichaTecnica.routes';
 import receitaInsumoRoutes from './routes/receitaInsumo.routes';
 import movimentacaoEstoqueRoutes from './routes/movimentacaoEstoque.routes';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
