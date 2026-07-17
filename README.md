@@ -13,18 +13,41 @@ Este sistema resolve esse problema automatizando o cálculo real de custo de cad
 - **Conversão de unidades:** permite registrar receitas em gramas, litros ou unidades, mesmo quando o insumo é comprado em outra unidade de medida
 **- Histórico de preços:** restareia automaticamente cada mudança de preço de compra, via trigger no banco de dados
 - **Calculo de margem de lucro:** sugere o preço de venda ideal com base no custo real e na margem alvo definida
+- **Controle de estoque** — registro de compras e perdas, com validação de saldo disponível
 
 # Tecnologias utilizadas
-**Backend:** Node.js, Express, TypeScript
-**Banco de dados**: PostgreSQL
-**Arquitetura**: Camadas (Route -> Controller -> Service -> Repository)
+- **Backend:** Node.js, Express, TypeScript
+- **Frontend:** React, Vite, Tailwind CSS
+- **Banco de dados:** PostgreSQL
+- **Testes:** Vitest (testes unitários com mocks)
+- **Arquitetura:** Camadas (Route → Controller → Service → Repository)
+- **Deploy:** Render (backend + banco de dados) e Vercel (frontend)
 
 # Funcionalidades implementadas
-- CRUD completo de insumos (com soft delete)
-- CRUD de Fichas Técnicas (receitas)
-- Vínculo de insumos a receitas, com validação de unidade de medida
-- Cálculo automático de alterações de preço (via trigger PostgreSQL)
-- Cálculo completo de Escadallo: custo total, custo por porção e preço de venda sugerido
+**Insumos**
+- CRUD completo (com soft delete)
+- Fator de Correção e Custo Real calculados automaticamente pelo banco (colunas geradas)
+- Histórico automático de alterações de preço (via trigger PostgreSQL)
+
+**Fichas Técnicas (Receitas)**
+- CRUD de fichas técnicas
+- Vínculo de insumos a receitas, com validação de unidade de medida e conversão automática
+- Cálculo completo de Escandallo: custo total, custo por porção, e preço de venda sugerido
+
+**Estoque**
+- Registro de entradas (compras), com validação de preço e data de validade
+- Registro de saídas (perdas), com validação de saldo disponível
+- Consulta de saldo atual por insumo
+
+**Frontend**
+- Listagem e cadastro de insumos
+- Visualização de fichas técnicas com cálculo de escandallo em tempo real
+- Dashboard consolidado de margens de todas as receitas
+- Tela de controle de estoque (compras, perdas, consulta de saldo)
+
+**Qualidade**
+- Testes unitários da lógica de negócio crítica (cálculo de escandallo), usando mocks para isolar dependências de banco de dados
+
 
 ## Como rodar o projeto localmente
 
@@ -46,9 +69,10 @@ psql -U seu_usuario -d nome_do_banco -f database/schema.sql
 psql -U seu_usuario -d nome_do_banco -f database/seed.sql
 ```
 
-3. Configure as variáveis de ambiente:
+3. Configure o backend:
 ```bash
 cd backend
+npm install
 ```
 Crie um arquivo `.env` com:
 ```env
@@ -58,15 +82,35 @@ DB_NAME=nome_do_banco
 DB_USER=seu_usuario
 DB_PASSWORD=sua_senha
 PORT=3000
+FRONTEND_URL=http://localhost:5173
 ```
-
-4. Instale as dependências e rode o servidor:
+Rode o servidor:
 ```bash
-npm install
 npm run dev
 ```
 
-O servidor estará disponível em `http://localhost:3000`.
+4. Configure o frontend (em outro terminal):
+```bash
+cd frontend
+npm install
+```
+Crie um arquivo `.env` com:
+```env
+VITE_API_URL=http://localhost:3000
+```
+Rode o frontend:
+```bash
+npm run dev
+```
+
+5. Acesse `http://localhost:5173`
+
+### Rodando os testes
+
+```bash
+cd backend
+npm run test
+```
 
 
 ### Endpoints principais
